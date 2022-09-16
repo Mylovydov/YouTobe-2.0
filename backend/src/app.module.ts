@@ -7,12 +7,15 @@ import { getTypeOrmConfig } from './config/typeorm.config'
 import { UserModule } from './user/user.module'
 import { VideoModule } from './video/video.module'
 import { CommentModule } from './comment/comment.module'
-import { AuthModule } from './auth/auth.module'
-import { MediaModule } from './media/media.module';
+import { MediaModule } from './media/media.module'
+import { TestModule } from './test/test.module'
 
 @Module({
 	imports: [
-		ConfigModule.forRoot(),
+		ConfigModule.forRoot({
+			envFilePath: '.development.env',
+			cache: true
+		}),
 		TypeOrmModule.forRootAsync({
 			imports: [ConfigModule],
 			inject: [ConfigService],
@@ -21,8 +24,9 @@ import { MediaModule } from './media/media.module';
 		UserModule,
 		VideoModule,
 		CommentModule,
-		AuthModule,
-		MediaModule
+		// AuthModule,
+		MediaModule,
+		TestModule
 	],
 	controllers: [AppController],
 	providers: [AppService]

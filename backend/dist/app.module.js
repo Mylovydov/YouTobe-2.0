@@ -16,14 +16,17 @@ const typeorm_config_1 = require("./config/typeorm.config");
 const user_module_1 = require("./user/user.module");
 const video_module_1 = require("./video/video.module");
 const comment_module_1 = require("./comment/comment.module");
-const auth_module_1 = require("./auth/auth.module");
 const media_module_1 = require("./media/media.module");
+const test_module_1 = require("./test/test.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            config_1.ConfigModule.forRoot(),
+            config_1.ConfigModule.forRoot({
+                envFilePath: '.development.env',
+                cache: true
+            }),
             typeorm_1.TypeOrmModule.forRootAsync({
                 imports: [config_1.ConfigModule],
                 inject: [config_1.ConfigService],
@@ -32,8 +35,8 @@ AppModule = __decorate([
             user_module_1.UserModule,
             video_module_1.VideoModule,
             comment_module_1.CommentModule,
-            auth_module_1.AuthModule,
-            media_module_1.MediaModule
+            media_module_1.MediaModule,
+            test_module_1.TestModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService]
