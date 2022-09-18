@@ -1,13 +1,15 @@
 import { $api } from '../http/axios'
 import { ApiPrefixEnum } from '@/types/api-prefix.enum'
-import { IUser } from '@/types/user.interface'
 import { AxiosResponse } from 'axios'
 
 export const UserService = {
-	getAll: async (): Promise<AxiosResponse<IUser[]>> => {
-		return await $api.get<IUser[]>(`/${ApiPrefixEnum.USER}`)
+	getAll: async (query: string): Promise<AxiosResponse> => {
+		const response = await $api.get(`${ApiPrefixEnum.USERS}/?${query}`)
+		return response.data
 	},
-	getUser: async (id: number): Promise<AxiosResponse<IUser>> => {
-		return await $api.get<IUser>(`${ApiPrefixEnum.USER}/by-id/${id}`)
+	getUserByFilter: async (query: string): Promise<AxiosResponse> => {
+		console.log(query)
+		const response = await $api.get(`${ApiPrefixEnum.USERS}/?${query}`)
+		return response.data
 	}
 }

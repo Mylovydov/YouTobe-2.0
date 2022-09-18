@@ -1,5 +1,5 @@
 export enum ApiPrefixEnum {
 	AUTH = 'auth',
-	USER = 'user',
+	USERS = 'users',
 	VIDEO = 'video'
 }

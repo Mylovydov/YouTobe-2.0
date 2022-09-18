@@ -30,10 +30,12 @@ export class VideoEntity extends Base {
 	@Column({ default: '', name: 'thumbnail_path' })
 	thumbnailPath: string
 
-	@OneToMany(() => CommentEntity, comment => comment.video)
+	@OneToMany(() => CommentEntity, comment => comment.video, {
+		onDelete: 'CASCADE'
+	})
 	comments: CommentEntity[]
 
-	@ManyToOne(() => UserEntity, user => user.videos)
+	@ManyToOne(() => UserEntity, user => user.videos, { onDelete: 'CASCADE' })
 	@JoinColumn({ name: 'user_id' })
 	user: UserEntity
 }

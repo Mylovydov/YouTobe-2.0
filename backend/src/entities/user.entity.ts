@@ -3,13 +3,19 @@ import { VideoEntity } from './video.entity'
 import { Base } from '../utils/base'
 import { SubscriptionEntity } from './subscription.entity'
 import { CrudValidationGroups } from '@nestjsx/crud'
-import { IsBoolean, IsDefined, IsEmail, IsOptional, IsString, Length } from 'class-validator'
+import {
+	IsBoolean,
+	IsDefined,
+	IsEmail,
+	IsOptional,
+	IsString,
+	Length
+} from 'class-validator'
 
 const { UPDATE, CREATE } = CrudValidationGroups
 
 @Entity('User')
 export class UserEntity extends Base {
-
 	@IsOptional({ groups: [UPDATE] })
 	@IsDefined({ groups: [CREATE] })
 	@IsEmail({}, { message: 'Incorrect email' })

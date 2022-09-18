@@ -20,7 +20,7 @@ export const userCrudOptions: CrudOptions = {
 				eager: true
 			}
 		},
-		exclude: ['updatedAt', 'createdAt'],
+		exclude: ['updatedAt', 'createdAt', 'password'],
 		persist: ['updatedAt'],
 		sort: [
 			{

@@ -21,7 +21,9 @@ __decorate([
     __metadata("design:type", user_entity_1.UserEntity)
 ], SubscriptionEntity.prototype, "fromUser", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => user_entity_1.UserEntity, user => user.subscriptions),
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.UserEntity, user => user.subscriptions, {
+        onDelete: 'CASCADE'
+    }),
     (0, typeorm_1.JoinColumn)({ name: 'to_channel_id' }),
     __metadata("design:type", user_entity_1.UserEntity)
 ], SubscriptionEntity.prototype, "toChannel", void 0);

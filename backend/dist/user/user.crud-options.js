@@ -21,7 +21,7 @@ exports.userCrudOptions = {
                 eager: true
             }
         },
-        exclude: ['updatedAt', 'createdAt'],
+        exclude: ['updatedAt', 'createdAt', 'password'],
         persist: ['updatedAt'],
         sort: [
             {

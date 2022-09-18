@@ -50,11 +50,13 @@ __decorate([
     __metadata("design:type", String)
 ], VideoEntity.prototype, "thumbnailPath", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => comment_entity_1.CommentEntity, comment => comment.video),
+    (0, typeorm_1.OneToMany)(() => comment_entity_1.CommentEntity, comment => comment.video, {
+        onDelete: 'CASCADE'
+    }),
     __metadata("design:type", Array)
 ], VideoEntity.prototype, "comments", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => user_entity_1.UserEntity, user => user.videos),
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.UserEntity, user => user.videos, { onDelete: 'CASCADE' }),
     (0, typeorm_1.JoinColumn)({ name: 'user_id' }),
     __metadata("design:type", user_entity_1.UserEntity)
 ], VideoEntity.prototype, "user", void 0);

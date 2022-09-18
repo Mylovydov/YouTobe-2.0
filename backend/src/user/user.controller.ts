@@ -80,7 +80,7 @@ export class UserController implements CrudController<UserEntity> {
 	): Promise<UserEntity> {
 		const user = await this.service.findOne({ where: { email: dto.email } })
 		if (user) {
-			throw new BadRequestException('User exists')
+			throw new BadRequestException('User exists!!')
 		}
 		return this.base.createOneBase(req, dto)
 	}

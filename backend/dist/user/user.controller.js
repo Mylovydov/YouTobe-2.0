@@ -32,7 +32,7 @@ let UserController = class UserController {
     async createOne(req, dto) {
         const user = await this.service.findOne({ where: { email: dto.email } });
         if (user) {
-            throw new common_1.BadRequestException('User exists');
+            throw new common_1.BadRequestException('User exists!!');
         }
         return this.base.createOneBase(req, dto);
     }

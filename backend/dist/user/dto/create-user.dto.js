@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GetManyResponseDto = exports.CreateUserDto = void 0;
+exports.CreateUserDto = void 0;
 const class_validator_1 = require("class-validator");
 class CreateUserDto {
 }
@@ -26,7 +26,4 @@ __decorate([
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "password", void 0);
 exports.CreateUserDto = CreateUserDto;
-class GetManyResponseDto {
-}
-exports.GetManyResponseDto = GetManyResponseDto;
 //# sourceMappingURL=create-user.dto.js.map
