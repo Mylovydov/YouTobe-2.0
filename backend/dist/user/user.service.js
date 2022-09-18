@@ -17,16 +17,33 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const user_entity_1 = require("../entities/user.entity");
 const crud_typeorm_1 = require("@nestjsx/crud-typeorm");
+const subscription_entity_1 = require("../entities/subscription.entity");
+const typeorm_2 = require("typeorm");
 let UserService = class UserService extends crud_typeorm_1.TypeOrmCrudService {
-    constructor(repo) {
-        super(repo);
-        this.repo = repo;
+    constructor(userRepository, subscriptionRepository) {
+        super(userRepository);
+        this.subscriptionRepository = subscriptionRepository;
+    }
+    async subscribe(id, channelId) {
+        const subscribe = {
+            toChannel: { id: channelId },
+            fromUser: { id }
+        };
+        const isSubscribed = await this.subscriptionRepository.findOneBy(subscribe);
+        if (!isSubscribed) {
+            const newSubscription = await this.subscriptionRepository.create(subscribe);
+            await this.subscriptionRepository.save(newSubscription);
+            return true;
+        }
+        await this.subscriptionRepository.delete(subscribe);
+        return false;
     }
 };
 UserService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(user_entity_1.UserEntity)),
-    __metadata("design:paramtypes", [Object])
+    __param(1, (0, typeorm_1.InjectRepository)(subscription_entity_1.SubscriptionEntity)),
+    __metadata("design:paramtypes", [Object, typeorm_2.Repository])
 ], UserService);
 exports.UserService = UserService;
 //# sourceMappingURL=user.service.js.map

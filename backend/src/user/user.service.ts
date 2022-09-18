@@ -1,7 +1,9 @@
-import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { UserEntity } from "../entities/user.entity";
-import { TypeOrmCrudService } from "@nestjsx/crud-typeorm";
+import { Injectable } from '@nestjs/common'
+import { InjectRepository } from '@nestjs/typeorm'
+import { UserEntity } from '../entities/user.entity'
+import { TypeOrmCrudService } from '@nestjsx/crud-typeorm'
+import { SubscriptionEntity } from '../entities/subscription.entity'
+import { Repository } from 'typeorm'
 
 // @Injectable()
 // export class UserService {
@@ -102,9 +104,29 @@ import { TypeOrmCrudService } from "@nestjsx/crud-typeorm";
 @Injectable()
 export class UserService extends TypeOrmCrudService<UserEntity> {
 	constructor(
-		@InjectRepository(UserEntity)
-		readonly repo
+		@InjectRepository(UserEntity) userRepository,
+		@InjectRepository(SubscriptionEntity)
+		private readonly subscriptionRepository: Repository<SubscriptionEntity>
 	) {
-		super(repo)
+		super(userRepository)
+	}
+
+	async subscribe(id: number, channelId: number): Promise<boolean> {
+		const subscribe = {
+			toChannel: { id: channelId },
+			fromUser: { id }
+		}
+		const isSubscribed = await this.subscriptionRepository.findOneBy(subscribe)
+
+		if (!isSubscribed) {
+			const newSubscription = await this.subscriptionRepository.create(
+				subscribe
+			)
+			await this.subscriptionRepository.save(newSubscription)
+			return true
+		}
+
+		await this.subscriptionRepository.delete(subscribe)
+		return false
 	}
 }

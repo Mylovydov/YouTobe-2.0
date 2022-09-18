@@ -11,9 +11,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Base = void 0;
 const typeorm_1 = require("typeorm");
+const class_validator_1 = require("class-validator");
 class Base {
 }
 __decorate([
+    (0, class_validator_1.IsOptional)({ always: true }),
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
 ], Base.prototype, "id", void 0);

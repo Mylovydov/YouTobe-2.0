@@ -14,33 +14,49 @@ const typeorm_1 = require("typeorm");
 const video_entity_1 = require("./video.entity");
 const base_1 = require("../utils/base");
 const subscription_entity_1 = require("./subscription.entity");
+const crud_1 = require("@nestjsx/crud");
+const class_validator_1 = require("class-validator");
+const { UPDATE, CREATE } = crud_1.CrudValidationGroups;
 let UserEntity = class UserEntity extends base_1.Base {
 };
 __decorate([
+    (0, class_validator_1.IsOptional)({ groups: [UPDATE] }),
+    (0, class_validator_1.IsDefined)({ groups: [CREATE] }),
+    (0, class_validator_1.IsEmail)({}, { message: 'Incorrect email' }),
     (0, typeorm_1.Column)({ unique: true }),
     __metadata("design:type", String)
 ], UserEntity.prototype, "email", void 0);
 __decorate([
+    (0, class_validator_1.IsDefined)({ groups: [CREATE] }),
+    (0, class_validator_1.IsString)({ always: true, message: 'Password must be a string' }),
+    (0, class_validator_1.Length)(6, 16, { message: 'Length password' }),
     (0, typeorm_1.Column)({ select: false }),
     __metadata("design:type", String)
 ], UserEntity.prototype, "password", void 0);
 __decorate([
+    (0, class_validator_1.IsOptional)({ groups: [UPDATE, CREATE] }),
+    (0, class_validator_1.IsString)({ always: true, message: 'name must be a string' }),
     (0, typeorm_1.Column)({ default: '' }),
     __metadata("design:type", String)
 ], UserEntity.prototype, "name", void 0);
 __decorate([
+    (0, class_validator_1.IsOptional)({ always: true }),
+    (0, class_validator_1.IsBoolean)({ always: true }),
     (0, typeorm_1.Column)({ default: false, name: 'is_verified' }),
     __metadata("design:type", Boolean)
 ], UserEntity.prototype, "isVerified", void 0);
 __decorate([
+    (0, class_validator_1.IsOptional)({ always: true }),
     (0, typeorm_1.Column)({ default: 0, name: 'subscribers_count' }),
     __metadata("design:type", Number)
 ], UserEntity.prototype, "subscribersCount", void 0);
 __decorate([
+    (0, class_validator_1.IsOptional)({ always: true }),
     (0, typeorm_1.Column)({ default: '', type: 'text' }),
     __metadata("design:type", String)
 ], UserEntity.prototype, "description", void 0);
 __decorate([
+    (0, class_validator_1.IsOptional)({ always: true }),
     (0, typeorm_1.Column)({ default: '', name: 'avatar_path' }),
     __metadata("design:type", String)
 ], UserEntity.prototype, "avatarPath", void 0);

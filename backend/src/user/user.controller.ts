@@ -1,7 +1,17 @@
-import { Controller } from "@nestjs/common";
-import { UserService } from "./user.service";
-import { Crud } from "@nestjsx/crud";
-import { UserEntity } from "../entities/user.entity";
+import { BadRequestException, Controller, Param, Patch, UseInterceptors } from '@nestjs/common'
+import { UserService } from './user.service'
+import {
+	Crud,
+	CrudController,
+	CrudRequest,
+	CrudRequestInterceptor,
+	Override,
+	ParsedBody,
+	ParsedRequest
+} from '@nestjsx/crud'
+import { UserEntity } from '../entities/user.entity'
+import { userCrudOptions } from './user.crud-options'
+import { CurrentUser } from './decorators/user.decorator'
 
 // @Controller('user')
 // export class UserController {
@@ -45,12 +55,33 @@ import { UserEntity } from "../entities/user.entity";
 // 	}
 // }
 
-@Crud({
-	model: {
-		type: UserEntity
-	}
-})
+@Crud(userCrudOptions)
 @Controller('users')
-export class UserController {
+export class UserController implements CrudController<UserEntity> {
 	constructor(public service: UserService) {}
+
+	get base(): CrudController<UserEntity> {
+		return this
+	}
+
+	@UseInterceptors(CrudRequestInterceptor)
+	@Patch('/subscribe/:channelId')
+	async subscribeToChannel(
+		@Param('channelId') channelId: string,
+		@CurrentUser('id') id: number
+	) {
+		return this.service.subscribe(id, +channelId)
+	}
+
+	@Override()
+	async createOne(
+		@ParsedRequest() req: CrudRequest,
+		@ParsedBody() dto: UserEntity
+	): Promise<UserEntity> {
+		const user = await this.service.findOne({ where: { email: dto.email } })
+		if (user) {
+			throw new BadRequestException('User exists')
+		}
+		return this.base.createOneBase(req, dto)
+	}
 }

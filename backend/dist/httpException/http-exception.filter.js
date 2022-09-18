@@ -15,7 +15,6 @@ let HttpExceptionFilter = class HttpExceptionFilter {
         const request = ctx.getRequest();
         const status = exception.getStatus();
         const message = exception.getResponse();
-        console.log('exception_____________', exception);
         response
             .status(status)
             .json({

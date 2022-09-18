@@ -3,8 +3,10 @@ import {
 	PrimaryGeneratedColumn,
 	UpdateDateColumn
 } from 'typeorm'
+import { IsOptional } from 'class-validator'
 
 export abstract class Base {
+	@IsOptional({ always: true })
 	@PrimaryGeneratedColumn()
 	id: number
 

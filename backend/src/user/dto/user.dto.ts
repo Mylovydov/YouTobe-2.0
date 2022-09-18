@@ -8,11 +8,11 @@ export class UserDto {
 	readonly password?: string
 
 	@IsString({ message: 'Name must be a string' })
-	readonly name: string
+	readonly name?: string
 
 	@IsString({ message: 'Description must be a string' })
-	readonly description: string
+	readonly description?: string
 
 	@IsString({ message: 'Avatar path must be a string' })
-	readonly avatarPath: string
+	readonly avatarPath?: string
 }
